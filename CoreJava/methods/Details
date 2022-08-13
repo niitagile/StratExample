@@ -1,0 +1,10 @@
+Method- a block of statements which return an output
+
+accessmodifier returntype name(parameterlist){
+
+
+return output;
+}
+
+calling
+output=name(values)
