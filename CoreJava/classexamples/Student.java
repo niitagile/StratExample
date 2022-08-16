@@ -4,8 +4,9 @@ public class Student {
 	//instance variables
 	private int rollno;
 	private String name;
-	private float total;
 	
+	private float total;
+	private String grade;
 	//methods
 	
 	public void setRollno(int rollno){
@@ -32,7 +33,14 @@ public class Student {
 		this.total = total;
 	}
 	
-	
+	public String calculateGrade() {
+		if(total>=80)
+			this.grade="A";
+		else
+			this.grade="B";
+		return this.grade;
+		
+	}
 	
 
 }

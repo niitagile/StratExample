@@ -21,18 +21,20 @@ public class StudentDriveClass {
 		System.out.println("Enter name");
 		student2.setName(sc.next());
 		System.out.println("Enter total");
-		student2.setTotal(sc.nextFloat());	
+		student2.setTotal(sc.nextFloat());
+		
 		
 		
 		System.out.println("Information about Ist student");
 		System.out.println("Rollno="+student1.getRollno());
 		System.out.println("Name="+student1.getName());
 		System.out.println("Total="+student1.getTotal());
+		System.out.println("Grade="+student1.calculateGrade());
 		System.out.println("Information about IInd student");
 		System.out.println("Rollno="+student2.getRollno());
 		System.out.println("Name="+student2.getName());
 		System.out.println("Total="+student2.getTotal());
-		
+		System.out.println("Grade="+student2.calculateGrade());
 		
 	
 	}
