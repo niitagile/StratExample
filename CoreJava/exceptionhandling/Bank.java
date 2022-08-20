@@ -1,5 +1,10 @@
 package exceptionhandling;
-public class Bank extends Exception{
+class InSufficientBalance extends Exception{
+	public InSufficientBalance(String str){
+		super(str);
+	}
+}
+public class Bank {
 	int bal;
 
 	public int getbal() {
@@ -14,11 +19,11 @@ public class Bank extends Exception{
 		try
 		{
 			if(a>bal)
-			throw new Bank();
+			throw new InSufficientBalance("Insufficient balanace");
 		}
-		catch(Bank e)
+		catch(InSufficientBalance e)
 		{
-			System.out.println("Balance is insufficient");
+			e.printStackTrace();
 		}
 	}
 	public static void main(String[] args) 
