@@ -71,7 +71,13 @@ public class StudentService implements StudentCrud {
 		ArrayList<Student> list = new ArrayList<>();
 		try {
 			Connection con = StudentConnection.getConnection();
-			
+			String str="select * from query";
+			Statement stmt=con.createStatement();
+			ResultSet rs=stmt.executeQuery(str);
+			while(rs.next()){
+				
+				list.add(new Student(rs.getInt("rollno"),rs.getString("name"),rs.getDate("dob")));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,9 +89,12 @@ public class StudentService implements StudentCrud {
 		Student student = null;
 		try {
 			Connection con = StudentConnection.getConnection();
-			String sql="";
+			String sql="select * from studentdetails where rollno=?";
 			PreparedStatement ps=con.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
+			if(rs.next()){
+				student=new Student(rs.getInt("rollno"),rs.getString("name"),rs.getDate("dob"));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
