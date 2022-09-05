@@ -24,6 +24,7 @@ public class StudentService implements StudentCrud {
 			ps.setDate(3, sdob);
 			
 			result=ps.executeUpdate();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,6 +45,7 @@ public class StudentService implements StudentCrud {
 			ps.setInt(3, student.getRollno());
 			
 			result=ps.executeUpdate();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,6 +62,7 @@ public class StudentService implements StudentCrud {
 			PreparedStatement ps=con.prepareStatement(sql);
 			ps.setInt(1, rollno);
 			result=ps.executeUpdate();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,6 +81,7 @@ public class StudentService implements StudentCrud {
 				
 				list.add(new Student(rs.getInt("rollno"),rs.getString("name"),rs.getDate("dob")));
 			}
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,10 +95,12 @@ public class StudentService implements StudentCrud {
 			Connection con = StudentConnection.getConnection();
 			String sql="select * from studentdetails where rollno=?";
 			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setInt(1, rollno);
 			ResultSet rs=ps.executeQuery();
 			if(rs.next()){
 				student=new Student(rs.getInt("rollno"),rs.getString("name"),rs.getDate("dob"));
 			}
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
