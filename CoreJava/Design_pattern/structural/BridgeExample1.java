@@ -1,35 +1,39 @@
 package Design_pattern.structural;
-import java.io.*;
-//Base classes
 
-class BaseEntiy{
-	private Long id;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-	this.id = id;
-	}
-}
-class Student1 extends BaseEntiy{
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+//Base class
+class Student{
+	private int rollno;
 	private String name;
+	public int getRollno() {
+		return rollno;
+	}
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
 	public String getName() {
-	return name; 
+		return name;
 	}
 	public void setName(String name) {
-	this.name = name;
+		this.name = name;
 	}
+	
 }
+/****************************************************************************/
 //Implementation
 interface StorageRepository{
-    public void store(BaseEntiy entiy);
+    public void store(Student entiy);
 }
 
+
 class FileRepository implements StorageRepository{
-	public void store(BaseEntiy entiy){
+	public void store(Student entiy){
 	try {
 	
-		FileOutputStream fileOut = new FileOutputStream("filePath");
+		FileOutputStream fileOut = new FileOutputStream("student.txt");
 		ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 		objectOut.writeObject(entiy);
 		objectOut.close();
@@ -41,52 +45,45 @@ class FileRepository implements StorageRepository{
 }
 
 class DataBaseRepository implements StorageRepository{
-	public void store(BaseEntiy entiy){
+	public void store(Student entiy){
 	
 	System.out.println("Save in Database");
 	}
 
 }
 
-//Abstarction
-interface BaseRepository{
-    public Student1 save(Student1 entiy);
-    public StorageRepository getRepository();
-} 
 
-class StudentRepository implements BaseRepository {
+/*****************************************************************************/
+//Bridge
+class StudentRepository  {
 
-    private StorageRepository repository;
-    public StudentRepository(StorageRepository repository){
-        this.repository=repository;
-    }
-	public StorageRepository getRepository(){
-		return repository;
+	  private StorageRepository repository;
+	  public StudentRepository(StorageRepository repository){
+	      this.repository=repository;
+	  }
+		public StorageRepository getRepository(){
+			return repository;
+		}
+
+	   public Student save(Student student) {
+
+	  	 if (student == null || student.getName() == null) {
+		            return null;
+		        }
+		        
+		        repository.store(student);
+		        return student;
+	  }
+		
 	}
 
-     public Student1 save(Student1 student) {
 
-    	 if (student == null || student.getName() == null) {
-	            return null;
-	        }
-	        student.setId(23L);
-	        repository.store(student);
-	        return student;
-    }
-	
-}
-public class BridgeExample1 {
-
+class BridgeExample1{
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		// code to store in file 
-	     StudentRepository fileRepositroy = new StudentRepository (new FileRepository());
-	     fileRepositroy.save(new Student1() );
-	 
-	     // code to store in DataBase 
-	     StudentRepository dbRepositroy = new StudentRepository(new DataBaseRepository());
-	     dbRepositroy.save(new Student1() );
-
+		Student s=new Student();
+		s.setRollno(1);
+		s.setName("Anil");
+		StudentRepository repo=new StudentRepository(new FileRepository());
+		repo.save(s);	
 	}
-
 }
