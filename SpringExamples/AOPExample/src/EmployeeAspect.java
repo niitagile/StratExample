@@ -9,7 +9,7 @@ public class EmployeeAspect {
 		System.out.println("Executing Advice on getName()");
 	}
 	
-	@Before("execution(*.get*())")
+	@Before("execution(public * allGetters())")
 	public void getAllAdvice(){
 		System.out.println("Service method getter called");
 	}
